@@ -3,6 +3,7 @@ import pytesseract
 from picamera.array import PiRGBArray
 from picamera import PiCamera
 import time
+import re
 
 camera = PiCamera()
 rawCapture = PiRGBArray(camera)
@@ -17,4 +18,5 @@ opt = "-c tessedit_char_whitelist=ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789"
 opt += " --oem 3 --psm 6"
 
 text = pytesseract.image_to_string(image, config = opt)
-print(text.replace(" ",""))
+print(text)
+print(re.sub(r'[^a-zA-Z0-9]','',text))
